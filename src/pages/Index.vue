@@ -1,49 +1,67 @@
 <template>
   <div class ="q-pa-md" style="max-width: 400px">
     <q-form
+      @submit="onSubmit"
+      method="post"
       @reset ="onReset"
       class="q-gutter-md"
-      rounded outlined label="Rounded outlined"
     >
     <div class="container">
       <q-input
         v-model="name"
         label="Digite seu nome "
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Por favor, digite seu nome' ]"
     />
     <q-input
       v-model="telefone"
       label="Digite seu telefone"
+      lazy-rules
+      :rules="[ val => val && val.length > 0 || 'Por favor, digite seu telefone' ]"
     />
     <q-input
       v-model="email"
       type= "email"
       label="Digite seu email"
+      lazy-rules
+      :rules="[ val => val && val.length > 0 || 'Por favor, digite seu email' ]"
     />
     <q-input
       v-model="mensagem"
-      type= "mensagem"
+      type= "textarea"
       label="Digite sua mensagem"
       lazy-rules
-      :rules="[ val => val && val.lenght > 0 || 'Por favor digite sua mensagem ']"
+      :rules="[ val => val && val.length > 0 || 'Por favor, digite sua mensagem' ]"
     />
-    <q-btn label="Submit" type="submit" color="grey" flat class="q-ml-sm" to="/redirecionamento"/>
+    <q-btn label="Submit" type="submit" color="grey" flat class="q-ml-sm"/>
     <q-btn label="resetar" type="reset" color="grey" flat class="q-ml-sm" icon="update"/>
     </div>
   </q-form>
   </div>
-
 </template>
-
 <script>
+
 export default {
   name: 'PageIndex',
   methods: {
     onReset () {
       this.name = null
-      this.senha = null
       this.email = null
       this.telefone = null
       this.mensagem = null
+    },
+    onSubmit () {
+      // 1) Instanciar um objeto com valores do formulário
+      const formData = {
+        name: this.name,
+        email: this.email,
+        telefone: this.telefone,
+        mensagem: this.mensagem
+      }
+      // 2) Guardar os dados no localStorage
+      localStorage.setItem('formData', JSON.stringify(formData))
+      // 3) Redirecionar pra pagina de Mensagem Enviada
+      this.$router.push('/successpage')
     }
   },
   data () {

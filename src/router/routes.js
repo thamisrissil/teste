@@ -5,7 +5,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-      { path: 'redirecionamento', component: () => import('pages/redirecionamento.vue') }
+      { path: 'successpage', component: () => import('pages/successpage.vue') }
     ]
   },
 
